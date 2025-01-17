@@ -37,7 +37,7 @@ This is the backend for the Company Manager application built with Laravel. It p
     DB_PASSWORD=
     ```
 
-    You can simply copy the .env.example file as it already includes default configurations credential for the database.
+    Or You can simply copy the .env.example file as it already includes default configurations credential for the database.
 
    ```bash
     cp .env.example .env
