@@ -37,7 +37,7 @@ This is the backend for the Company Manager application built with Laravel. It p
     DB_PASSWORD=
     ```
 
-    You can simply copy the .env.example file as it already includes default configurations credential for the database, mailer, and Pusher.
+    You can simply copy the .env.example file as it already includes default configurations credential for the database.
 
    ```bash
     cp .env.example .env
@@ -49,16 +49,16 @@ This is the backend for the Company Manager application built with Laravel. It p
     php artisan key:generate
     ```
 
-5. **Run the Unit Test:**
-
-    ```bash
-    php artisan test
-    ```
-
-6. **Run database migrations:**
+5. **Run database migrations:**
 
     ```bash
     php artisan migrate
+    ```
+
+6. **Run the Unit Test:**
+
+    ```bash
+    php artisan test
     ```
 
 7. **Seed the database:**
