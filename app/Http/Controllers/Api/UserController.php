@@ -23,6 +23,10 @@ class UserController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
         if ($request->has('sortBy')) {
             $query->orderBy($request->sortBy, $request->get('sortDirection', 'asc'));
         }
@@ -71,13 +75,13 @@ class UserController extends Controller
         }
 
         $user->update([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'name' => $data['name'] ?? $user->name,
+            'email' => $data['email'] ?? $user->email,
             'password' => $data['password'] ?? $user->password,
-            'phone_number' => $data['phoneNumber'],
-            'address' => $data['address'],
-            'role' => $data['role'],
-            'company_id' => $data['companyId'],
+            'phone_number' => $data['phoneNumber'] ?? $user->phone_number,
+            'address' => $data['address'] ?? $user->address,
+            'role' => $data['role'] ?? $user->role,
+            'company_id' => $data['companyId'] ?? $user->company_id,
         ]);
 
         return new UserResource($user);

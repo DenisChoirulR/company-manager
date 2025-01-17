@@ -2,43 +2,54 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
+use App\Models\User;
+use App\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
+    protected $model = User::class;
 
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
-    public function definition(): array
+    public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'id' => $this->faker->uuid(),
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'role' => RoleEnum::EMPLOYEE->value,
+            'company_id' => Company::factory(),
+            'password' => Hash::make('password'),
+            'phone_number' => $this->faker->phoneNumber(),
+            'address' => $this->faker->address(),
             'remember_token' => Str::random(10),
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Define the model state for admin users.
      */
-    public function unverified(): static
+    public function admin()
     {
         return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
+            'role' => RoleEnum::ADMIN->value,
+        ]);
+    }
+
+    /**
+     * Define the model state for manager users.
+     */
+    public function manager()
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => RoleEnum::MANAGER->value,
         ]);
     }
 }

@@ -28,21 +28,21 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['nullable', 'string', 'max:255'],
             'email' => [
-                'required',
+                'nullable',
                 'email',
                 Rule::unique('users', 'email')->ignore($this->user),
             ],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'phoneNumber' => [
-                'required',
+                'nullable',
                 'string',
                 Rule::unique('users', 'phone_number')->ignore($this->user),
             ],
-            'address' => ['required', 'string', 'max:500'],
-            'role' => ['required', new Enum(RoleEnum::class)],
-            'companyId' => ['required', 'uuid', 'exists:companies,id'],
+            'address' => ['nullable', 'string', 'max:500'],
+            'role' => ['nullable', new Enum(RoleEnum::class)],
+            'companyId' => ['nullable', 'uuid', 'exists:companies,id'],
         ];
     }
 
