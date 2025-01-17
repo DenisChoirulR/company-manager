@@ -7,9 +7,12 @@ use App\Http\Requests\Company\CompanyIndexRequest;
 use App\Http\Requests\Company\CompanyStoreRequest;
 use App\Http\Requests\Company\CompanyUpdateRequest;
 use App\Http\Resources\CompanyResource;
+use App\Http\Resources\UserResource;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Hash;
 
 class CompanyController extends Controller
 {
@@ -30,7 +33,7 @@ class CompanyController extends Controller
         return CompanyResource::collection($companies);
     }
 
-    public function store(CompanyStoreRequest $request): CompanyResource
+    public function store(CompanyStoreRequest $request): JsonResponse
     {
         $company = Company::create([
             'name' => $request['name'],
@@ -38,7 +41,17 @@ class CompanyController extends Controller
             'phone_number' => $request['phoneNumber'],
         ]);
 
-        return new CompanyResource($company);
+        $user = User::factory()
+            ->manager()
+            ->create([
+                'company_id' => $company->id,
+                'email' => 'manager-'.$company->email,
+            ]);
+
+        return response()->json(['data' => [
+            'company' => new CompanyResource($company),
+            'user' => new UserResource($user),
+        ]]);
     }
 
     public function show(Company $company): CompanyResource

@@ -32,7 +32,11 @@ class UserStoreRequest extends FormRequest
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phoneNumber' => ['required', 'string', 'unique:users,phone_number'],
             'address' => ['required', 'string', 'max:500'],
-            'role' => ['required', new Enum(RoleEnum::class)],
+            'role' => [
+                'required',
+                'string',
+                'in:' . RoleEnum::MANAGER->value . ',' . RoleEnum::EMPLOYEE->value,
+            ],
             'companyId' => ['required', 'uuid', 'exists:companies,id'],
         ];
     }

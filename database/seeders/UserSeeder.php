@@ -25,15 +25,6 @@ class UserSeeder extends Seeder
 
         foreach ($companies as $company) {
             User::factory()
-                ->admin()
-                ->create([
-                    'company_id' => $company->id,
-                    'email' => 'admin_' . $company->id . '@mail.com',
-                ]);
-        }
-
-        foreach ($companies as $company) {
-            User::factory()
                 ->manager()
                 ->create([
                     'company_id' => $company->id,

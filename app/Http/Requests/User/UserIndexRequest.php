@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\User;
 
+use App\Enums\RoleEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rules\Enum;
 
 class UserIndexRequest extends FormRequest
 {
@@ -29,6 +31,8 @@ class UserIndexRequest extends FormRequest
             'sortBy' => 'sometimes|string|in:name,email,phone_number',
             'sortDirection' => 'sometimes|string|in:ASC,DESC',
             'search' => 'sometimes|string',
+            'role' => ['nullable', new Enum(RoleEnum::class)],
+            'companyId' => ['nullable', 'uuid', 'exists:companies,id'],
         ];
     }
 

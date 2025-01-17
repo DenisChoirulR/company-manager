@@ -41,7 +41,6 @@ class UserUpdateRequest extends FormRequest
                 Rule::unique('users', 'phone_number')->ignore($this->user),
             ],
             'address' => ['nullable', 'string', 'max:500'],
-            'role' => ['nullable', new Enum(RoleEnum::class)],
             'companyId' => ['nullable', 'uuid', 'exists:companies,id'],
         ];
     }
