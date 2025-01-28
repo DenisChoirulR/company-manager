@@ -39,3 +39,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{user}', [UserController::class, 'destroy'])->middleware([CheckUserRole::class . ':Admin,Manager']);
     });
 });
+
+Route::get('/test', [\App\Http\Controllers\Api\TestController::class, 'index']);
+Route::get('/test2', [\App\Http\Controllers\Api\TestController::class, 'test']);
